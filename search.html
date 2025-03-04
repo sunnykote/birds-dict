@@ -3,23 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Birds</title>
+    <title>Пошук птушак: Усе птушкі Еўропы</title>
 </head>
 <body>
-    <h1>Search for Birds</h1>
-    <input type="text" id="search-bar" placeholder="Search for a bird..." />
+    <h1>Пошук птушак</h1>
+    <input type="text" id="search-bar" placeholder="Шукаць птушачку..." />
     <button onclick="performSearch()">Search</button>
     <div id="search-results"></div>
-
+    
     <script src="data.js"></script>
     <script>
         function performSearch() {
             const searchQuery = document.getElementById('search-bar').value.toLowerCase();
-            const results = birdsData.filter(bird =>
-                bird["Лацінская назва"].toLowerCase().includes(searchQuery) ||
-                bird["Руская назва"].toLowerCase().includes(searchQuery) ||
-                bird["Беларуская назва"].toLowerCase().includes(searchQuery)
-            );
+
+            // Filter the birds data with a check for undefined or empty values
+            const results = birdsData.filter(bird => {
+                // Make sure the value exists before calling .toLowerCase()
+                const latinName = bird["Лацінская назва"] ? bird["Лацінская назва"].toLowerCase() : "";
+                const russianName = bird["Руская назва"] ? bird["Руская назва"].toLowerCase() : "";
+                const belarusianName = bird["Беларуская назва"] ? bird["Беларуская назва"].toLowerCase() : "";
+
+                return latinName.includes(searchQuery) ||
+                       russianName.includes(searchQuery) ||
+                       belarusianName.includes(searchQuery);
+            });
+
             displayResults(results);
         }
 

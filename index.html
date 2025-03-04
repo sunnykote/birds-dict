@@ -8,12 +8,33 @@
 <body>
     <h1>Welcome to the Birds Dictionary</h1>
     <p>Знайдзі імя птушкі на беларускай!</p>
-    <a href="search.html">Go to Bird Search</a>
+    
+    <a href="search.html">Шукаць птушку</a>
 
-   <ul id="birds-list"></ul> <!-- Placeholder for the birds list -->
+    <h2>Усе птушкі Еўропы:</h2>
+    <div id="all-birds"></div> <!-- This will display the bird data -->
 
     <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Function to display all birds data
+        function displayAllBirds() {
+            const allBirdsDiv = document.getElementById('all-birds');
+            allBirdsDiv.innerHTML = ''; // Clear any existing content
 
+            birdsData.forEach(bird => {
+                const birdDiv = document.createElement('div');
+                birdDiv.innerHTML = `
+                    <p><strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}</p>
+                    <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
+                    <p><strong>Беларуская назва:</strong> ${bird["Беларуская назва"]}</p>
+                    <hr>
+                `;
+                allBirdsDiv.appendChild(birdDiv);
+            });
+        }
+
+        // Call the function to display all birds when the page loads
+        displayAllBirds();
+    </script>
 </body>
 </html>
