@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Birds</title>
+</head>
+<body>
+    <h1>Search for Birds</h1>
+    <input type="text" id="search-bar" placeholder="Search for a bird..." />
+    <button onclick="performSearch()">Search</button>
+    <div id="search-results"></div>
+
+    <script src="data.js"></script>
+    <script>
+        function performSearch() {
+            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+            const results = birdsData.filter(bird =>
+                bird["Лацінская назва"].toLowerCase().includes(searchQuery) ||
+                bird["Руская назва"].toLowerCase().includes(searchQuery) ||
+                bird["Беларуская назва"].toLowerCase().includes(searchQuery)
+            );
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            const resultDiv = document.getElementById('search-results');
+            resultDiv.innerHTML = '';
+
+            if (results.length > 0) {
+                results.forEach(bird => {
+                    const birdDiv = document.createElement('div');
+                    birdDiv.innerHTML = `
+                        <strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}<br>
+                        <strong>Руская назва:</strong> ${bird["Руская назва"]}<br>
+                        <strong>Беларуская назва:</strong> ${bird["Беларуская назва"]}<br><br>
+                    `;
+                    resultDiv.appendChild(birdDiv);
+                });
+            } else {
+                resultDiv.textContent = 'No birds found matching the search query.';
+            }
+        }
+    </script>
+</body>
+</html>
