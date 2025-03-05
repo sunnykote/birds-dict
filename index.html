@@ -7,12 +7,13 @@
 </head>
 <body>
     <h1>Welcome to the Birds Dictionary</h1>
-    <p>Знайдзі імя птушкі на беларускай!</p>
-    
-    <a href="search.html">Шукаць птушку</a>
 
+    <!-- Поле поиска -->
+    <input type="text" id="search-input" placeholder="Пошук па назве...">
+    <button onclick="searchBirds()">🔍 Пошук</button>
+    
     <h2>Усе птушкі Еўропы:</h2>
-    <div id="all-birds"></div> <!-- This will display the bird data -->
+    <div id="all-birds"></div> <!-- Здесь будут отображаться птицы -->
 
     <script src="data.js"></script>
     <script src="ebird.js"></script>
@@ -20,16 +21,16 @@
         // Функция поиска английского названия по латинскому
         function getEnglishName(latinName) {
             const birdMatch = ebirdsData.find(bird => bird.sciName === latinName);
-            return birdMatch ? birdMatch.comName : "Няма дадзеных"; // Если не найдено, показываем "Няма дадзеных"
+            return birdMatch ? birdMatch.comName : "Няма дадзеных";
         }
 
-        // Функция для отображения всех птиц
-        function displayAllBirds() {
+        // Функция для отображения птиц по списку
+        function displayBirds(filteredBirds) {
             const allBirdsDiv = document.getElementById('all-birds');
-            allBirdsDiv.innerHTML = ''; // Очистка перед заполнением
+            allBirdsDiv.innerHTML = ''; // Очистка перед добавлением новых данных
 
-            birdsData.forEach(bird => {
-                const englishName = getEnglishName(bird["Лацінская назва"]); // Найти английское название
+            filteredBirds.forEach(bird => {
+                const englishName = getEnglishName(bird["Лацінская назва"]);
 
                 const birdDiv = document.createElement('div');
                 birdDiv.innerHTML = `
@@ -43,8 +44,29 @@
             });
         }
 
-        // Вызов функции при загрузке страницы
-        displayAllBirds();
+        // Функция для поиска птиц
+        function searchBirds() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+
+            const filteredBirds = birdsData.filter(bird =>
+                bird["Беларуская назва"].toLowerCase().includes(query) ||
+                bird["Руская назва"].toLowerCase().includes(query) ||
+                bird["Лацінская назва"].toLowerCase().includes(query) ||
+                getEnglishName(bird["Лацінская назва"]).toLowerCase().includes(query)
+            );
+
+            displayBirds(filteredBirds);
+        }
+
+        // Изначально отображаем все птицы
+        displayBirds(birdsData);
+
+        // Позволяет выполнять поиск при нажатии Enter
+        document.getElementById('search-input').addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                searchBirds();
+            }
+        });
     </script>
 </body>
 </html>
