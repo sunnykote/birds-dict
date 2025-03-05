@@ -15,25 +15,35 @@
     <div id="all-birds"></div> <!-- This will display the bird data -->
 
     <script src="data.js"></script>
+    <script src="ebird.js"></script>
     <script>
-        // Function to display all birds data
+        // Функция поиска английского названия по латинскому
+        function getEnglishName(latinName) {
+            const birdMatch = ebirdsData.find(bird => bird.sciName === latinName);
+            return birdMatch ? birdMatch.comName : "Няма дадзеных"; // Если не найдено, показываем "Няма дадзеных"
+        }
+
+        // Функция для отображения всех птиц
         function displayAllBirds() {
             const allBirdsDiv = document.getElementById('all-birds');
-            allBirdsDiv.innerHTML = ''; // Clear any existing content
+            allBirdsDiv.innerHTML = ''; // Очистка перед заполнением
 
             birdsData.forEach(bird => {
+                const englishName = getEnglishName(bird["Лацінская назва"]); // Найти английское название
+
                 const birdDiv = document.createElement('div');
                 birdDiv.innerHTML = `
                     <p><strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}</p>
                     <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
                     <p><strong>Беларуская назва:</strong> ${bird["Беларуская назва"]}</p>
+                    <p><strong>Англійская назва:</strong> ${englishName}</p>
                     <hr>
                 `;
                 allBirdsDiv.appendChild(birdDiv);
             });
         }
 
-        // Call the function to display all birds when the page loads
+        // Вызов функции при загрузке страницы
         displayAllBirds();
     </script>
 </body>
