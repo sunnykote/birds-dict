@@ -51,6 +51,8 @@
 
     <script src="data.js"></script>
     <script src="ebird.js"></script>
+    <script src="ebird_pt_pt.js"></script>
+    <script src="ebird_pl.js"></script>
     <script>
         function getEnglishName(latinName) {
             const birdMatch = ebirdsData.find(bird => bird.sciName === latinName);
@@ -79,6 +81,39 @@
                 `;
                 allBirdsDiv.appendChild(birdDiv);
             });
+
+
+    
+        function getPolishName(latinName) {
+            const birdMatch = ebirdsDataPl.find(bird => bird.sciName === latinName);
+            return birdMatch ? birdMatch.comName : "Няма дадзеных";
+        }
+
+        function displayBirds(filteredBirds) {
+            const allBirdsDiv = document.getElementById('all-birds');
+            allBirdsDiv.innerHTML = '';
+
+            if (filteredBirds.length === 0) {
+                allBirdsDiv.innerHTML = "<p>Нічога не знойдзена</p>";
+                return;
+            }
+
+            filteredBirds.forEach(bird => {
+                const polishName = getPolishName(bird["Лацінская назва"]);
+
+                const birdDiv = document.createElement('div');
+                birdDiv.innerHTML = `
+                    <p><strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}</p>
+                    <p><strong>Беларуская назва:</strong> ${bird["Беларуская назва"]}</p>
+                    <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
+                    <p><strong>Англійская назва:</strong> ${englishName}</p>
+                    <p><strong>Польская назва:</strong> ${polishName}</p>
+                    <hr>
+                `;
+                allBirdsDiv.appendChild(birdDiv);
+            });    
+
+            
         }
 
         function searchBirds() {
