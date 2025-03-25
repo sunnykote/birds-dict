@@ -81,17 +81,17 @@
             filteredBirds.forEach(bird => {
                 const englishName = getEnglishName(bird["Лацінская назва"]);
                 const polishName = getPolishName(bird["Лацінская назва"]);
-                const portugueseName = getPolishName(bird["Лацінская назва"]);
+                const portugueseName = getPortugueseName(bird["Лацінская назва"]);
 
     
                 const birdDiv = document.createElement('div');
                 birdDiv.innerHTML = `
                     <p><strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}</p>
                     <p><strong>Беларуская назва:</strong> ${bird["Беларуская назва"]}</p>
-                    <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
                     <p><strong>Англійская назва:</strong> ${englishName}</p>
-                    <p><strong>Польская назва:</strong> ${polishName}</p>
                     <p><strong>Партугальская назва:</strong> ${portugueseName}</p>
+                    <p><strong>Польская назва:</strong> ${polishName}</p>
+                    <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
                     <hr>
                 `;
                 allBirdsDiv.appendChild(birdDiv);
