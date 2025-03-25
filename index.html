@@ -58,49 +58,32 @@
             const birdMatch = ebirdsData.find(bird => bird.sciName === latinName);
             return birdMatch ? birdMatch.comName : "Няма дадзеных";
         }
-
-        function displayBirds(filteredBirds) {
-            const allBirdsDiv = document.getElementById('all-birds');
-            allBirdsDiv.innerHTML = '';
-
-            if (filteredBirds.length === 0) {
-                allBirdsDiv.innerHTML = "<p>Нічога не знойдзена</p>";
-                return;
-            }
-
-            filteredBirds.forEach(bird => {
-                const englishName = getEnglishName(bird["Лацінская назва"]);
-
-                const birdDiv = document.createElement('div');
-                birdDiv.innerHTML = `
-                    <p><strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}</p>
-                    <p><strong>Беларуская назва:</strong> ${bird["Беларуская назва"]}</p>
-                    <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
-                    <p><strong>Англійская назва:</strong> ${englishName}</p>
-                    <hr>
-                `;
-                allBirdsDiv.appendChild(birdDiv);
-            });
-
-
     
         function getPolishName(latinName) {
             const birdMatch = ebirdsDataPl.find(bird => bird.sciName === latinName);
             return birdMatch ? birdMatch.comName : "Няма дадзеных";
         }
 
+        function getPortugueseName(latinName) {
+            const birdMatch = ebirdsDataPt.find(bird => bird.sciName === latinName);
+            return birdMatch ? birdMatch.comName : "Няма дадзеных";
+        }
+    
         function displayBirds(filteredBirds) {
             const allBirdsDiv = document.getElementById('all-birds');
             allBirdsDiv.innerHTML = '';
-
+    
             if (filteredBirds.length === 0) {
                 allBirdsDiv.innerHTML = "<p>Нічога не знойдзена</p>";
                 return;
             }
-
+    
             filteredBirds.forEach(bird => {
+                const englishName = getEnglishName(bird["Лацінская назва"]);
                 const polishName = getPolishName(bird["Лацінская назва"]);
+                const portugueseName = getPolishName(bird["Лацінская назва"]);
 
+    
                 const birdDiv = document.createElement('div');
                 birdDiv.innerHTML = `
                     <p><strong>Лацінская назва:</strong> ${bird["Лацінская назва"]}</p>
@@ -108,39 +91,41 @@
                     <p><strong>Руская назва:</strong> ${bird["Руская назва"]}</p>
                     <p><strong>Англійская назва:</strong> ${englishName}</p>
                     <p><strong>Польская назва:</strong> ${polishName}</p>
+                    <p><strong>Партугальская назва:</strong> ${portugueseName}</p>
                     <hr>
                 `;
                 allBirdsDiv.appendChild(birdDiv);
-            });    
-
-            
+            });
         }
-
+    
         function searchBirds() {
             const query = document.getElementById('search-input').value.trim().toLowerCase();
-
+    
             if (query === "") {
                 displayBirds(birdsData);
                 return;
             }
-
+    
             const filteredBirds = birdsData.filter(bird =>
                 bird["Беларуская назва"].toLowerCase().includes(query) ||
                 bird["Руская назва"].toLowerCase().includes(query) ||
                 bird["Лацінская назва"].toLowerCase().includes(query) ||
-                getEnglishName(bird["Лацінская назва"]).toLowerCase().includes(query)
+                getEnglishName(bird["Лацінская назва"]).toLowerCase().includes(query) ||
+                getPolishName(bird["Лацінская назва"]).toLowerCase().includes(query) ||
+                getPortugueseName(bird["Лацінская назва"]).toLowerCase().includes(query)
             );
-
+    
             displayBirds(filteredBirds);
         }
-
+    
         displayBirds(birdsData);
-
+    
         document.getElementById('search-input').addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
                 searchBirds();
             }
         });
     </script>
+    
 </body>
 </html>
