@@ -34,35 +34,41 @@
         }
 
         #cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #1f2937;
-            color: white;
-            padding: 20px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: #1f2937;
+          color: white;
+          padding: 20px;
+          display: none;
+          align-items: center;
+          z-index: 9999;
+          font-family: Arial, sans-serif;
+          gap: 20px;
+        }
+
+        #cookie-banner-content {
+          display: flex;
+          align-items: center;
+          gap: 20px;
         }
 
         #cookie-banner button {
-            margin-left: 10px;
-            padding: 8px 14px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+          padding: 8px 14px;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
         }
 
         .accept-btn {
-            background-color: #10b981;
-            color: white;
+          background-color: #10b981;
+          color: white;
         }
 
         .decline-btn {
-            background-color: #ef4444;
-            color: white;
+          background-color: #ef4444;
+          color: white;
         }
     </style>
 </head>
@@ -172,13 +178,13 @@ document.getElementById('search-input').addEventListener("keyup", function(event
 <!-- ================= COOKIE + GOOGLE ANALYTICS ================= -->
 
 <div id="cookie-banner">
-    <div>
-        We use cookies to collect anonymous statistics (Google Analytics).
-    </div>
-    <div>
-        <button class="accept-btn" onclick="acceptCookies()">Accept</button>
-        <button class="decline-btn" onclick="declineCookies()">Decline</button>
-    </div>
+  <div id="cookie-banner-content">
+    <span>
+      Мы выкарыстоўваем файлы cookie для збору ананімнай статыстыкі (Google Analytics).
+    </span>
+    <button class="accept-btn" onclick="acceptCookies()">Прыняць</button>
+    <button class="decline-btn" onclick="declineCookies()">Адмовіцца</button>
+  </div>
 </div>
 
 <script>
